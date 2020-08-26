@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\Http\ControllersController;
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
+use Carbon\Carbon;
 
 class ArticlesController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::latest('published_at')->latest('created_at')
+            ->published()
+            ->get();
 
         return view('articles.index', compact('articles'));
     }
@@ -32,5 +34,21 @@ class ArticlesController extends Controller
     {
         Article::create($request->validated());
         return redirect('articles');
+    }
+
+    public function edit($id)
+    {
+        $article = Article::findOrFail($id);
+
+        return view('articles.edit', compact('article'));
+    }
+
+    public function update(ArticleRequest $request, $id)
+    {
+        $article = Article::findOrFail($id);
+
+        $article->update($request->validated());
+
+        return redirect(url('articles', [$article->id]));
     }
 }
