@@ -11,16 +11,11 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-Route::get('contact', 'WelcomeController@contact');
-Route::get('about', 'PagesController@about');
+Route::get('/', 'WelcomeController@index')->name('home');
+Route::get('contact', 'PagesController@contact')->name('contact');
+Route::get('about', 'PagesController@about')->name('about');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'ArticlesController@index')->name('home');
 
-Route::get('articles', 'ArticlesController@index');
-Route::get('articles/create', 'ArticlesController@create');
-Route::get('articles/{id}', 'ArticlesController@show');
-Route::post('articles', 'ArticlesController@store');
-Route::get('articles/{id}/edit', 'ArticlesController@edit');
-Route::patch('articles/{id}', 'ArticlesController@update');
+Route::resource('articles', 'ArticlesController');

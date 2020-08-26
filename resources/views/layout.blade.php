@@ -5,8 +5,15 @@
     <title>My Blog</title>
 </head>
 <body>
+    {{-- ナビゲーションバーの Partial を使用 --}}
+    @include('navbar')
 
-    @yield('content')
+    <div class="container">
+        @if (Session::has('flash_message'))
+            <div class="alert alert-success">{{ Session::get('flash_message') }}</div>
+        @endif
 
+        @yield('content')
+    </div>
 </body>
 </html>
