@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index')->name('home');
+//Route::get('/', 'WelcomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('contact', 'PagesController@contact')->name('contact');
 Route::get('about', 'PagesController@about')->name('about');
 Auth::routes();
